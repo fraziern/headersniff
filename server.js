@@ -9,15 +9,24 @@ var app = express();
 //   language
 //   software
 
-app.get('/', function (req, res) {
+function getSoftware(str) {
   var re = /\(([a-z\;_\s\d]+)\)/i;
-  var str = req.get('User-Agent');
+  var m = re.exec(str) || ['None','None'];
+  return m[1];
+}
+
+function getIP(str) {
+  var re = /\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}/;
   var m = re.exec(str) || ['None'];
+  return m[0];
+}
+
+app.get('/', function (req, res) {
 
   var header = {
-    ipaddress: req.ip,
+    ipaddress: getIP(req.ip),
     language: req.get('Accept-Language'),
-    software: m[0]
+    software: getSoftware(req.get('User-Agent'))
   };
 
   res.json(header);
