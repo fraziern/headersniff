@@ -10,10 +10,14 @@ var app = express();
 //   software
 
 app.get('/', function (req, res) {
+  var re = /\(([a-z\;_\s\d]+)\)/i;
+  var str = req.get('User-Agent');
+  var m = re.exec(str) || ['None'];
+
   var header = {
     ipaddress: req.ip,
     language: req.get('Accept-Language'),
-    software: req.get('User-Agent')
+    software: m[0]
   };
 
   res.json(header);
