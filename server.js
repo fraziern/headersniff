@@ -12,9 +12,8 @@ var app = express();
 //   next();
 // });
 
-app.get('/:id', function (req, res) {
-  var id = req.params.id;
-  res.send(id);
+app.get('/', function (req, res) {
+  res.send('Hi.');
 });
 
 
