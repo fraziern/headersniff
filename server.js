@@ -1,21 +1,23 @@
 'use strict';
 
 var express = require('express');
-// var Stamper = require('./stamper');
 
 var app = express();
-// var stamper = new Stamper();
 
-// app.use(express.static(__dirname + '/public'));
-
-// app.get('/', function(req, res, next) {
-//   next();
-// });
+// return:
+//   ip address
+//   language
+//   software
 
 app.get('/', function (req, res) {
-  res.send('Hi.');
-});
+  var header = {
+    ipaddress: req.ip,
+    language: req.get('Accept-Language'),
+    software: req.get('User-Agent')
+  };
 
+  res.json(header);
+});
 
 var port = process.env.PORT || 8080;
 app.listen(port,  function () {
